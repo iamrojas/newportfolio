@@ -1,0 +1,620 @@
+
+@import "node_modules/foundation-sites/assets/foundation.scss";
+
+
+/* ==========================================================================
+#Fonts
+========================================================================== */
+
+
+  $icon-font-path: '../../fonts/';
+
+  // @font-face {
+	 //  font-family: 'Metrisch';
+	 //  src: url($icon-font-path +  'Metrisch-ExtraLight-webfont.woff2') format('woff2'),
+		//    url($icon-font-path +  'Metrisch-ExtraLight-webfont.woff') format('woff');
+	 //  font-weight: normal;
+	 //  font-style: normal;
+  // }
+
+
+/* ==========================================================================
+#Variables
+ ========================================================================== */
+	
+	$color1: #F64E4E; //dark grey
+	$color2: #2E2828;//red
+	$color3: #A7A2A9; //grey
+	$color4: #F4F7F5; //off white
+	$color5:#08090A; //black
+
+
+	// //== Typography
+	// //
+	// //## Font, line-height, and color for body text, headings, and more.
+
+	// $font-family-sans-serif:  "calluna-sans",sans-serif;
+	// $font-family-serif:     'Lora', serif;
+	// //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+	// $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
+	// $font-family-base:        $font-family-sans-serif !default;
+
+
+	// $font-special: 'Lora', 'Papyrus';
+
+
+	//== Media queries breakpoints
+	//
+	//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+	$screen-sm:                  576px !default;
+	$screen-sm-min:              $screen-sm !default;
+
+	$screen-md:                  768px !default;
+	$screen-md-min:              $screen-md !default;
+
+	$screen-lg:                  992px !default;
+	$screen-lg-min:              $screen-lg !default;
+
+	$screen-xl:                  1200px !default;
+	$screen-xl-min:              $screen-lg !default;
+
+
+	$screen-xxl:                 1920px;
+	$screen-xxl-min:              $screen-xl !default;
+
+	// So media queries don't overlap when required, provide a maximum
+	$screen-sm-max:              ($screen-md-min - 1) !default;
+	$screen-md-max:              ($screen-lg-min - 1) !default;
+	$screen-lg-max:              ($screen-xl-min - 1) !default;
+	$screen-xl-max:              ($screen-xxl-min - 1) !default;
+
+
+	$font-sans-serif:'Metrisch', sans-serif;
+	$font-serif:'Noto Serif', serif;
+	
+	$font-special: 'dunbar-tall' , sans-serif;
+
+
+
+/* ==========================================================================
+#Mixins
+========================================================================== */
+
+	@mixin e($element){
+
+	  &__#{$element}{
+	    @content;
+	  }
+	}
+
+	@mixin m($modifier){
+	  &--#{$modifier}{
+	    @content;
+	  }
+	}
+
+	@function strip-unit($value) {
+	  @return $value / ($value * 0 + 1);
+	}
+
+	@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+		$u1: unit($min-vw);
+		$u2: unit($max-vw);
+		$u3: unit($min-font-size);
+		$u4: unit($max-font-size);
+
+		@if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+			& {
+				font-size: $min-font-size;
+				@media screen and (min-width: $min-vw) {
+					font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+				}
+				@media screen and (min-width: $max-vw) {
+					font-size: $max-font-size;
+				}
+			}
+		}
+	}
+
+	%padding-one{
+		padding:1rem;
+	}
+
+	%padding-two{
+		padding:2rem 1rem;
+	}
+
+	%padding-three{
+		padding:3rem 1rem;
+	}
+
+	%padding-four{
+		padding:4rem 1rem;
+	}
+
+	%padding-eight{
+		padding:8rem 1rem;
+	}
+
+/* ==========================================================================
+#Base
+========================================================================== */
+
+	$min_width: 320px;
+	$max_width: 1200px;
+	$min_font: 14px;
+	$max_font: 16px;
+
+	html {
+	  @include fluid-type($min_width, $max_width, $min_font, $max_font);
+	}
+
+	body{
+		line-height:1.5;
+	}
+
+	$mod_1: 1.2; // mobile
+	$mod_2: 1.408; // desktop
+
+	h1 {  
+	  font-size: $mod_1*$mod_1*$mod_1*$mod_1 *1rem; 
+	  @include fluid-type($min_width, $max_width, $mod_1*$mod_1*$mod_1 *$min_font, $mod_2*$mod_2*$mod_2 *$min_font);
+	}
+	h2 {  
+	  font-size: $mod_1*$mod_1*$mod_1 *1rem; 
+	  @include fluid-type($min_width, $max_width, $mod_1*$mod_1*$mod_1 *$min_font, $mod_2*$mod_2*$mod_2 *$min_font);
+	}
+	h3 { 
+	  font-size: $mod_1*$mod_1 *1rem;
+	  @include fluid-type($min_width, $max_width, $mod_1*$mod_1 *$min_font, $mod_2*$mod_2 *$min_font);
+	}
+
+
+	h1,h2,h3,h4,h5,h6{
+		line-height:1.5;
+		margin-bottom:.8rem;
+		font-family: $font-special;
+		font-weight: 900;
+	}
+
+	p, ul, ol, pre, table, blockquote {
+	  margin-top: 0rem;
+	  margin-bottom: 1.5rem;
+	}
+	ul ul, ol ol, ul ol, ol ul {
+	  margin-top: 0rem;
+	  margin-bottom: 0rem;
+	}
+
+	/* Let's make sure all's aligned */
+	hr, .hr {
+	  border: 1px solid;
+	  margin: -1px 0;
+	}
+	a, b, i, strong, em, small, code {
+	  line-height: 0;
+	}
+	sub, sup {
+	  line-height: 0;
+	  position: relative;
+	  vertical-align: baseline;
+	}
+	sup {
+	  top: -0.5em;
+	}
+	sub {
+	  bottom: -0.25em;
+	}
+
+
+	.btn{
+		display: inline-block;
+		color: #fff;
+		background: $color2;
+		border-radius: 0 100px 100px 0;
+		border-radius: 360px;
+		padding: 1.5rem 4rem;
+		font-family: $font-special;
+		font-weight: 900;
+		transition: all .4s ease-in-out;
+		margin-bottom: 1rem;
+
+		&:hover, &:focus{
+			color: #fff;
+			background: darken($color2, 15%);
+		}
+
+		&.red{
+			background: $color1;
+		}
+
+		&.white{
+			background:#fff;
+			color: $color1;
+
+			&:hover, &:focus{
+				background: darken(#fff, 15%);
+			}
+		}
+	}
+
+/* ==========================================================================
+#Modules
+========================================================================== */
+
+
+body{
+	background: #fff url('../../images/line.jpg');
+}
+
+.hero{
+	background: $color1 url('../../images/tiger-bg.jpg') no-repeat center;
+	background-size: cover;
+	color: #fff;
+	position: relative;
+	overflow: hidden;
+
+	h1{
+		font-size: 1.8rem;
+		margin-bottom: 0;
+
+		@include breakpoint(medium){
+			font-size: 2.25rem;
+		}	
+	}
+
+	h2{
+		font-size: 3rem;
+		line-height: 3rem;
+		margin-bottom: 2rem;
+
+		@include breakpoint(medium){
+			line-height: 4rem;
+			font-size: 4rem;
+		}
+
+
+		@include breakpoint(xlarge){
+			line-height: 6rem;
+			font-size: 6rem;
+		}
+	}
+
+	p{
+		margin-bottom: 4rem;
+	}
+}
+
+.hero__desc{
+	font-size: 1.2rem;
+}
+
+.hero-shape{
+	position: absolute;
+	bottom: -1rem;;
+	right: 0;
+	width: 66%;
+	z-index: 0;
+	
+}
+
+.hero__container{
+	position: relative;
+	z-index: 2;
+	padding: 2rem;
+	display: flex;
+	align-items: center;
+}
+
+.hero,.hero__container{
+	min-height: 50rem;
+	height: 100vh;
+}
+
+.hero.int,.int .hero__container{
+	min-height: 10rem;
+	height: 10vh;
+}
+
+
+.main-logo{
+	max-width: 3rem;
+	margin: 0 auto;
+	
+	@include breakpoint(medium){
+		margin: 0;
+		max-width: 4rem;
+	}
+}
+
+.main-header{
+	padding: 2rem;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 3;
+
+	.grid-container{
+		position: relative;
+	}
+}
+
+
+.scroll-indicator{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	color: #fff;
+	width: 10rem;
+	text-align: center;
+	height: 4rem;
+	z-index: 5;
+	
+	a{
+		color: #fff;
+
+		&:hover, &:focus{
+			color: #fff;
+		}
+	}
+
+	
+	&:after{
+		content: ' ';
+		height: 2rem;
+		background: #fff;
+		width: 1px;
+		position: absolute;
+		left:0;
+		right:0;
+		bottom:0;
+		margin: 0 auto;
+
+	}
+}
+
+.about{
+	padding: 2rem 0;
+
+
+	@include breakpoint(medium){
+		padding: 4rem 0;
+	}
+
+	@include breakpoint(large){
+		padding: 16rem 0;
+	}
+}
+
+.about-header, .work-header{
+	font-size: 2rem;
+
+	@include breakpoint(medium){
+		font-size: 4rem;
+	}
+}
+
+.about__desc{
+	background: $color2;
+	color: #fff;
+	padding: 4rem 2em;
+	font-size: 1.071rem;
+
+	p{
+		line-height: 2rem;
+	}
+	
+
+	@include breakpoint(medium){
+		padding: 4rem;
+	}
+}
+
+.tools{
+	padding: 1rem;
+	background: #E7E3E3;
+	color: $color2;
+	margin-bottom: 2rem;
+
+	p{
+		margin-bottom: 0;
+	}
+
+	h4{
+		font-size: 1rem;
+	}
+}
+
+.work{
+	padding: 4rem 0;
+}
+
+.main-footer{
+	background: #000;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 4rem;
+}
+
+.footer-logo{
+	width: 2rem;
+
+	@include breakpoint(medium){
+		width: 3rem;
+	}
+}
+
+.main-nav{
+	font-family: $font-special;
+	color: #fff;
+	text-align: center;
+	margin-top: 1rem;
+	font-size: 1.2rem;
+
+	@include breakpoint(medium){
+		position: absolute;
+		top: 1rem;
+		right: 0;
+		z-index: 2;
+		text-align: right;
+		margin-top: 0;
+	}
+	
+
+	a{
+		display: inline-block;
+		color: #fff;
+		padding: 1rem 1rem;
+		font-weight: 900;
+		position: relative;
+		overflow: hidden;
+
+
+		&::after {
+			content: " ";
+			height: 0.25rem;
+			width: 100%;
+			position: absolute;
+			background: #fff;
+			bottom: 0;
+			left: 0;
+			display: block;
+			opacity: 0;
+			transform: translateX(-400px);
+			transition: all .4s ease-in-out;
+		}
+	
+		&:hover::after,
+		&.active::after {
+			color: #fff;
+			transform: translateX(0);
+			opacity: 1;
+		}
+
+
+
+		@include breakpoint(medium){
+			padding: 2rem 2rem;
+		}
+	}
+}
+
+
+.work__item{
+	overflow: hidden;
+	position: relative;
+	display: block;
+
+	&:before{
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: $color1;
+		opacity: .9;
+		z-index: 2;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		transform: translateY(-100%);
+		transition: transform .4s ease-in-out;
+	}
+
+	&:after{
+		content: "{ Learn More }";
+		color: #fff;
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		text-align: center;
+		font-family: $font-special;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 2;
+		opacity: 0;
+		transition: opacity .4s ease-in-out;
+		font-size: 1.2rem;
+		font-weight: 900;
+	}
+
+	&:hover:before{
+		transform: translateY(0);
+	}
+
+	&:hover:after{
+		opacity: 1;
+	}
+}
+
+.main-content{
+	min-height: 100vh;
+
+	&.int{
+		padding-top: 4rem;
+		padding-bottom: 4rem;
+	}
+}
+
+.int-header{
+	opacity: .8;
+	font-size: 2.5rem;
+
+	@include breakpoint(medium){
+		font-size: 3rem;
+	}
+
+	@include breakpoint(large){
+		font-size: 4rem;
+	}
+}
+
+.about__img{
+	margin-top: 1rem;
+}
+
+.shadow-left{
+	position: relative;
+	display: block;
+
+	&:before {
+		content: " ";
+		background: $color2;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 3rem;
+		left: -2rem;
+		z-index: -1;
+	}
+}
+
+.project__desc{
+	@include breakpoint(medium){
+		margin-top: 4rem;
+	}
+}
+
+.project-side{
+	padding: 4rem !important;
+	background: #eee;
+}
+
+
+.int-header__nav{
+	@include breakpoint(medium){
+		text-align: right;
+	}
+}
