@@ -2,13 +2,13 @@
 	"name": "",
 	"version": "",
 	"devDependencies": {
-		"concurrently": "^3.6.1",
-		"jshint": "^2.9.6",
-		"json-server": "^0.12.0",
-		"lite-server": "^2.4.0",
-		"node-sass": "^4.9.2",
-		"nodemon": "^1.18.3",
-		"uglify-js": "^2.4.11"
+		"concurrently": "^7.0.0",
+		"jshint": "^2.13.3",
+		"json-server": "^0.17.0",
+		"lite-server": "^2.6.1",
+		"node-sass": "^7.0.1",
+		"nodemon": "^2.0.15",
+		"uglify-js": "^3.14.5"
 	},
 	"scripts": {
 		"start": "concurrently -k \"npm run dev\" \"npm run watch-css\"",
@@ -24,7 +24,6 @@
 		"bash": "Location of the bash/shell script file"
 	},
 	"dependencies": {
-		"foundation-sites": "^6.5.3",
-		"hoek": "^5.0.3"
+		"foundation-sites": "^6.7.4"
 	}
 }
